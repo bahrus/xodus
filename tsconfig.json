@@ -1,0 +1,19 @@
+{
+	"compilerOptions": {
+		"target": "ESNext",
+		"module":"ESNext",
+		"sourceMap": false,
+		"experimentalDecorators": false,
+		"newLine": "LF",
+		"watch": true
+	},
+	"files":[
+		"toTempl.ts"
+	],
+	"exclude":[
+		"build",
+		"bower_components",
+		"node_modules"
+	]
+
+}
