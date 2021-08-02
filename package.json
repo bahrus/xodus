@@ -1,6 +1,6 @@
 {
   "name": "xodus",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "toTempl.js",
   "module": "toTempl.js",
