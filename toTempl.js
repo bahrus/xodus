@@ -15,4 +15,5 @@ export function toTempl(templ, fromShadow) {
         target.innerHTML = `{{${target.getAttribute(bindAttr)}}}`;
         target.removeAttribute(bindAttr);
     }
+    return templateToClone;
 }
