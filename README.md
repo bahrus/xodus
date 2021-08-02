@@ -62,7 +62,8 @@ Example 4:
 <a href=//msnbc.com>This is MSNBC</a>
 ```
 
-h2oExtract generates [{network: 'cnn', networkURL: '//cnn.com'}, {network: 'Fox News', networkURL: '//foxnews.com'}, {network: 'msnbc', networkURL: '//msnbc.com'}]
+h2oExtract generates {newsStations: [{network: 'cnn', networkURL: '//cnn.com'}, {network: 'Fox News', networkURL: '//foxnews.com'}, {network: 'msnbc', networkURL: '//msnbc.com'}]}
+
 toTempl generates ?
 
 ```html
