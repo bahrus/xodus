@@ -1,17 +1,17 @@
-export function toTempl(templ: Element){
-    let templateToClone = templ as HTMLTemplateElement;
-    if(!(templateToClone instanceof HTMLTemplateElement)){
+export function toTempl(templ) {
+    let templateToClone = templ;
+    if (!(templateToClone instanceof HTMLTemplateElement)) {
         templateToClone = document.createElement('template');
-        if(templ.localName === options.as && templ.shadowRoot !== null){
+        if (templ.localName === options.as && templ.shadowRoot !== null) {
             templateToClone.innerHTML = templ.shadowRoot.innerHTML;
-        }else{
+        }
+        else {
             templateToClone.innerHTML = templ.innerHTML;
         }
-                
     }
     const bindAttr = 'data-bind';
     const targets = templateToClone.content.querySelectorAll(`[${bindAttr}]`);
-    for(const target of targets){
+    for (const target of targets) {
         target.innerHTML = `{{${target.getAttribute(bindAttr)}}}`;
         target.removeAttribute(bindAttr);
     }
