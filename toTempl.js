@@ -1,8 +1,8 @@
-export function toTempl(templ) {
+export function toTempl(templ, fromShadow) {
     let templateToClone = templ;
     if (!(templateToClone instanceof HTMLTemplateElement)) {
         templateToClone = document.createElement('template');
-        if (templ.localName === options.as && templ.shadowRoot !== null) {
+        if (fromShadow) {
             templateToClone.innerHTML = templ.shadowRoot.innerHTML;
         }
         else {
