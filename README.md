@@ -26,7 +26,7 @@ function toTemple generates:
 <template><a href=//cnn.com>{{network}}</a></template>
 ```
 
-Example 2:  Interpolation
+Example 2:  Extrapolation (?)
 
 ```html
 <a href=//cnn.com data-bind="This is {{network}}">This is cnn</a>
@@ -47,6 +47,7 @@ Example 3:
 ```
 
 h2oExtract generates {network: 'cnn', networkURL: '//cnn.com'}
+
 toTempl generates 
 
 ```html
