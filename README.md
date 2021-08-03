@@ -23,7 +23,7 @@ function h2oExtract take this DOM node, and generates object: {network: 'cnn'}.
 
 x-f stands for "expand from", or "expanded from", depending on the context.
 
-function toTemple takes this node and  generates (in memory):
+function toTempl takes this node and  generates (in memory):
 
 ```html
 <template><a>{{network}}</a></template>
