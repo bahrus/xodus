@@ -1,4 +1,4 @@
-# xodus
+# xodus [WIP]
 
 xodus is a templating language that is compatible with fully formed, (server-rendered) HTML.
 
@@ -11,28 +11,67 @@ The goals are:
 1.  The output should impose as little extra overhead on the server-rendered HTML as possible.
 2.  Can be reverse engineered into the data structures from which the HTML was generated. (h2oExtract)
 3.  Provides enough information to apply well-performing updates on the rendered HTML DOM as client-side data changes.
+4.  Could be used as an HTML-based templating language on the server.   
 4.  Compatible with any language capable of parsing HTML and JSON.
 
 Example 1: 
 
 ```html
-<a href=//cnn.com data-bind=network>cnn</a>
+<a x-f=network>cnn</a>
 ```
 function h2oExtract take this DOM node, and generates object: {network: 'cnn'}.
 
-function toTemple generates:
+x-f stands for "expand from", or "expanded from", depending on the context.
+
+function toTemple takes this node and  generates (in memory):
 
 ```html
-<template><a href=//cnn.com>{{network}}</a></template>
+<template><a>{{network}}</a></template>
 ```
+
+
+function xodus takes as input:
+
+1. DOM node:
+
+```html
+<a x-f=network></a>
+```
+
+and 
+
+2.  Object:
+
+```JSON
+{"network": "cnn"}
+```
+
+and generates
+
+```html
+<a x-f=network>cnn</a>
+```
+
+---
+
+Example 1a:
+
+```html
+<a data-xf=network>cnn</a>
+```
+
+The functions described above do the same thing.
+
+---
+
 
 Example 2:  Extrapolation (?)
 
 ```html
-<a href=//cnn.com data-bind="This is {{network}}">This is cnn</a>
+<a x-f="This is {{network}}">This is cnn</a>
 ```
 
-function h2oExtract(tbd) take this DOM node, and generate object: {network: 'cnn'}.
+function h2oExtract(tbd) take this DOM node, and generates object: {network: 'cnn'}.
 
 function toTempl(tbd) can take this DOM node, and generates:
 
@@ -40,10 +79,30 @@ function toTempl(tbd) can take this DOM node, and generates:
 <template><a>This is {{network}}</a></template>
 ```
 
+function xodus takes the DOM node:
+
+```html
+<a x-f="This is {{network}}"></a>
+```
+
+and
+
+```JSON
+{"network": "cnn"}
+```
+
+and generates
+
+```html
+<a x-f="This is {{network}}">This is cnn</a>
+```
+
+---
+
 Example 3:  
 
 ```html
-<a href=//cnn.com data-bind='{"TextContent":"This is {{network}}"},{"href":"networkURL"}'>This is cnn</a>
+<a href=//cnn.com x-f='{"TextContent":"This is {{network}}"},{"href":"networkURL"}'>This is cnn</a>
 ```
 
 h2oExtract generates {network: 'cnn', networkURL: '//cnn.com'}
@@ -58,7 +117,7 @@ toTempl generates
 Example 4:
 
 ```html
-<a href=//cnn.com data-bind='[{"repeat":3, "list": "newsStations",  "nodesPerIteration": 1},{"TextContent":"This is {{network}}"},{"href":"networkURL"}]'>This is cnn</a>
+<a href=//cnn.com x-f='[{"repeat":3, "list": "newsStations"},{"TextContent":"This is {{network}}"},{"href":"networkURL"}]'>This is cnn</a>
 <a href=//foxnews.com>This is Fox News</a>
 <a href=//msnbc.com>This is MSNBC</a>
 ```
