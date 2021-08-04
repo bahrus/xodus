@@ -146,11 +146,11 @@ During server-side rendering, properties don't make sense (so the .textContent w
 
 
 
-Example 5:
+Example 5: Facing the music, Part III
 
 ```html
-<a href=//foxnews.com/politics/desantis-biden-do-job-secure-border>Fox News</a>
-<a href=//msnbc.com/opinion/why-tucker-carlson-s-trip-budapest-bad-news-america-n1275881>MSNBC</a>
+<a x-f='{"href":[[0,13],[14]]}' href=//foxnews.com/politics/desantis-biden-do-job-secure-border>Fox News</a>
+<a x-f='{"href": [[0, 11], [12]]]}' href=//msnbc.com/opinion/why-tucker-carlson-s-trip-budapest-bad-news-america-n1275881>MSNBC</a>
 <template x-f="repeat of 3 newsStations><a href="{{networkURL='//cnn.com'}}{{articleID='/2021/08/04/us/florida-school-mask-mandate-law/index.html'}}" x-f=networkURL>CNN</a></template>
 ```
 
