@@ -19,7 +19,7 @@ Example 1:
 ```html
 <a x-f=network>cnn</a>
 ```
-function h2oExtract take this DOM node, and generates object: {network: 'cnn'}.
+function h2oExtract takes this DOM node, and generates object: {network: 'cnn'}.
 
 x-f stands for "expand from", or "expanded from", depending on the context.
 
@@ -65,24 +65,34 @@ The functions described above do the same thing.
 ---
 
 
-Example 2:  Extrapolation (?)
+Example 2:  Facing the Music, Part I
 
 ```html
-<a x-f="This is {{network}}">This is cnn</a>
+<a><template x-f>This is {{network='cnn'}}</template></a>
 ```
+
+template tag with attribute x-f behaves a bit like:
+
+```html
+<a><template shadowroot=open>This is cnn</template></a>
+```
+
+Yes, this means user won't see anything until js loads, but interpolation seems problematic, let's face the music.
+
+However, the significance of this shortcoming may be quite small in the scheme of things, if most dynamic content is generated in list format.
 
 function h2oExtract(tbd) take this DOM node, and generates object: {network: 'cnn'}.
 
 function toTempl(tbd) can take this DOM node, and generates:
 
 ```html
-<template><a>This is {{network}}</a></template>
+<template><a>This is {{network ?? 'cnn'}}</a></template>
 ```
 
 function xodus takes the DOM node:
 
 ```html
-<a x-f="This is {{network}}"></a>
+<a><template x-f>This is {{network='cnn'}}</template></a>
 ```
 
 and
@@ -94,15 +104,17 @@ and
 and generates
 
 ```html
-<a x-f="This is {{network}}">This is cnn</a>
+<a><template x-f>This is {{network}}</template></a>
 ```
+
+ 
 
 ---
 
 Example 3:  
 
 ```html
-<a href=//cnn.com x-f='{".textContent":"This is {{network}}", "href":"networkURL"}'>This is cnn</a>
+<a href=//cnn.com x-f='{".textContent":"network", "href":"networkURL"}'>cnn</a>
 ```
 
 h2oExtract generates {network: 'cnn', networkURL: '//cnn.com'}
@@ -110,12 +122,21 @@ h2oExtract generates {network: 'cnn', networkURL: '//cnn.com'}
 toTempl generates 
 
 ```html
-<template><a href={{networkURL}}>This is {{network}}</a></template>
+<template><a href={{networkURL}}>{{network}}</a></template>
 ```
+
+---
+
+Example 4: Facing the music, Part II
+
+```html
+<template x-f><a href="{{networkURL='cnn.com'}}?article-id={{articleID='2021/08/04/us/florida-school-mask-mandate-law/index.html'}}" x-f=networkURL>cnn</a>
+```
+
 
 TODO I
 
-If a key starts with a period, like ".textContent" then it refers to a property of the element.  Otherwise, the key refers to the attribute.
+For Example 3 ... If a key starts with a period, like ".textContent" then it refers to a property of the element.  Otherwise, the key refers to the attribute.
 
 This raises a tricky conundrum for xodus.  There are performance benefits to using properties instead of attributes, on the client, especially for non string properties.
 
@@ -123,34 +144,29 @@ This raises a tricky conundrum for xodus.  There are performance benefits to usi
 
 During server-side rendering, properties don't make sense (so the .textContent will need to be hard-coded to mean "this goes inside the tag)".
 
-TODO 2
 
-What if a node has some text with dynamic interpolation, but also some child nodes.  So say the template we want to generate looks like:
 
-```html
-<template><a>This is {{network}}.  <span>The most trusted name in {{genre}}</span></a>  Copyright {{year}}</template>
-```
-
-Proposed solution:
+Example 5:
 
 ```html
-<a x-f='{".textContent":["This is {{network}}.  ", "  Copyright {{year}}"], "href":"networkURL"}'>This is cnn.  </a>
+<a href=//foxnews.com/politics/desantis-biden-do-job-secure-border>Fox News</a>
+<a href=//msnbc.com/opinion/why-tucker-carlson-s-trip-budapest-bad-news-america-n1275881>MSNBC</a>
+<template x-f="repeat of 3 newsStations><a href="{{networkURL='//cnn.com'}}{{articleID='/2021/08/04/us/florida-school-mask-mandate-law/index.html'}}" x-f=networkURL>CNN</a></template>
 ```
 
-Example 4:
+h2oExtract generates 
 
-```html
-<a href=//cnn.com x-f='[{"repeat":3, "list": "newsStations"},{"TextContent":"This is {{network}}"},{"href":"networkURL"}]'>This is cnn</a>
-<a href=//foxnews.com>This is Fox News</a>
-<a href=//msnbc.com>This is MSNBC</a>
+```JSON
+{"newsStations": [
+    {"network": "Fox News", "networkURL": "//foxnews.com", "articleID": "/politics/desantis-biden-do-job-secure-border"}, 
+    {"network": "MSNBC", "networkURL": "//msnbc.com", "articleID": "/opinion/why-tucker-carlson-s-trip-budapest-bad-news-america-n1275881"}, 
+    {"network": "CNN", "networkURL": "//cnn.com", "articleID": }, ]}
 ```
-
-h2oExtract generates {newsStations: [{network: 'cnn', networkURL: '//cnn.com'}, {network: 'Fox News', networkURL: '//foxnews.com'}, {network: 'msnbc', networkURL: '//msnbc.com'}]}
 
 toTempl generates ?
 
 ```html
-<template for:each={{newsStations}}><a href={{networkURL}}>This is {{network}}</a>
+<template for:each={{newsStations}}><a href={{networkURL}}{{articleID}}>{{network}}</a>
 ```
 
 Name inspired by this [funny comment](https://twitter.com/davatron5000/status/1312955820137754624).

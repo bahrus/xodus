@@ -5,7 +5,11 @@
   "main": "toTempl.js",
   "module": "toTempl.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "node node_modules/xtal-test/serve.js"
+  },
+  "devDependencies": {
+    "xtal-test": "0.0.51"
   },
   "repository": {
     "type": "git",
