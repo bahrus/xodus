@@ -102,7 +102,7 @@ and generates
 Example 3:  
 
 ```html
-<a href=//cnn.com x-f='{"TextContent":"This is {{network}}"},{"href":"networkURL"}'>This is cnn</a>
+<a href=//cnn.com x-f='{".textContent":"This is {{network}}", "href":"networkURL"}'>This is cnn</a>
 ```
 
 h2oExtract generates {network: 'cnn', networkURL: '//cnn.com'}
@@ -110,9 +110,32 @@ h2oExtract generates {network: 'cnn', networkURL: '//cnn.com'}
 toTempl generates 
 
 ```html
-<template><a href={{networkURL}}>This is {{msg}}</a></template>
+<template><a href={{networkURL}}>This is {{network}}</a></template>
 ```
 
+TODO I
+
+If a key starts with a period, like ".textContent" then it refers to a property of the element.  Otherwise, the key refers to the attribute.
+
+This raises a tricky conundrum for xodus.  There are performance benefits to using properties instead of attributes, on the client, especially for non string properties.
+
+(Perhaps the issue isn't that significant as long as template instantiation only binds to attributes).
+
+During server-side rendering, properties don't make sense (so the .textContent will need to be hard-coded to mean "this goes inside the tag)".
+
+TODO 2
+
+What if a node has some text with dynamic interpolation, but also some child nodes.  So say the template we want to generate looks like:
+
+```html
+<template><a>This is {{network}}.  <span>The most trusted name in {{genre}}</span></a>  Copyright {{year}}</template>
+```
+
+Proposed solution:
+
+```html
+<a x-f='{".textContent":["This is {{network}}.  ", "  Copyright {{year}}"], "href":"networkURL"}'>This is cnn.  </a>
+```
 
 Example 4:
 

@@ -9,7 +9,7 @@ export function toTempl(templ, fromShadow) {
             templateToClone.innerHTML = templ.innerHTML;
         }
     }
-    const bindAttr = 'data-bind';
+    const bindAttr = 'x-f';
     const targets = templateToClone.content.querySelectorAll(`[${bindAttr}]`);
     for (const target of targets) {
         target.innerHTML = `{{${target.getAttribute(bindAttr)}}}`;
