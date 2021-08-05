@@ -267,8 +267,7 @@ h2oExtract generates {isWarmOutside: true}
 </ul>
 ```
 
-h2oExtract generates {isWarmOutside: true}
-
+h2oExtract generates {isWarmOutside: false}
 
 
 Name inspired by this [funny comment](https://twitter.com/davatron5000/status/1312955820137754624).
