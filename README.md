@@ -178,7 +178,7 @@ This raises a tricky conundrum for xodus.  There are performance benefits to usi
 
 During server-side rendering, properties don't make sense (so the .textContent will need to be hard-coded to mean "this goes inside the tag)".
 
-
+---
 
 Example 5: DryLoops
 
@@ -236,6 +236,40 @@ and generates
 <a x-f='[18, [0, 13], [13]]' href=//foxnews.com/politics/desantis-biden-do-job-secure-border>Fair and Balanced Fox News</a>
 <a x-f='[13, [0, 11], [11]]' href=//msnbc.com/opinion/why-tucker-carlson-s-trip-budapest-bad-news-america-n1275881>Lean Forward MSNBC</a>
 ```
+
+---
+
+Example 6
+
+```html
+<ul>
+    <li>Warm weather clothing</li>
+    <template x-f="show 3 items if {{isWarmOutside}}"></template>
+    <li>t-shirt</li>
+    <li>shorts</li>
+    <li>sandals</li>
+    <li>Cool weather clothing</li>
+</ul>
+```
+
+h2oExtract generates {isWarmOutside: true}
+
+```html
+<ul>
+    <li>Warm weather clothing</li>
+    <template x-f="show if {{isWarmOutside}}"></template>
+    <template>
+        <li>t-shirt</li>
+        <li>shorts</li>
+        <li>sandals</li>
+    </template>
+    <li>Cool weather clothing</li>
+</ul>
+```
+
+h2oExtract generates {isWarmOutside: true}
+
+
 
 Name inspired by this [funny comment](https://twitter.com/davatron5000/status/1312955820137754624).
 
