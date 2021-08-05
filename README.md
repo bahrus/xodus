@@ -213,7 +213,7 @@ toTempl generates ?
 xodus takes DOM input:
 
 ```html
-<template x-f="for each of the {{newsStations}}><a href={{networkURL}}{{articleID}}>{{network}}</a></template>
+<template x-f="for each of n {{newsStations}}><a href={{networkURL}}{{articleID}}>{{network}}</a></template>
 ```
 
 and object
