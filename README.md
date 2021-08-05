@@ -71,12 +71,12 @@ The interpolation requirement seems problematic, however you look at it.  It is 
 
 ```html
 
-<a><template x-f='{".textContent":[8, 11]}'>{{network}}</template>This is cnn</a>
+<a><template x-f='[8, 11]'>{{network}}</template>This is cnn</a>
 ```
 
-function h2oExtract(tbd) take this DOM node, and generates object: {network: 'cnn'}.
+function h2oExtract(tbd) takes this DOM node, and generates object: {network: 'cnn'}.
 
-function toTempl(tbd) can take this DOM node, and generates:
+function toTempl(tbd) takes this DOM node, and generates:
 
 ```html
 <template><a>This is {{network}}</a></template>
@@ -85,7 +85,7 @@ function toTempl(tbd) can take this DOM node, and generates:
 function xodus takes the DOM node:
 
 ```html
-<a><template x-f='{".textContent":[8, 11]}'>{{network}}</template>This is </a>
+<a><template x-f='[8]'>{{network}}</template>This is </a>
 ```
 
 and
@@ -97,7 +97,7 @@ and
 and generates
 
 ```html
-<a><template x-f='{".textContent":[8, 11]}'>{{network}}</template>This is cnn</a>
+<a><template x-f='[8, 11]'>{{network}}</template>This is cnn</a>
 ```
 
  
