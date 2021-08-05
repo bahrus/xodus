@@ -71,7 +71,7 @@ The interpolation requirement seems problematic, however you look at it.  It is 
 
 ```html
 
-<a><template x-f='[8, 11]'>{{network}}</template>This is cnn</a>
+<a x-f='{"network": [8]'>This is cnn</a>
 ```
 
 function h2oExtract(tbd) takes this DOM node, and generates object: {network: 'cnn'}.
@@ -85,7 +85,7 @@ function toTempl(tbd) takes this DOM node, and generates:
 function xodus takes the DOM node:
 
 ```html
-<a><template x-f='[8]'>{{network}}</template>This is </a>
+<a x-f='{"network": [8]'>This is </a>
 ```
 
 and
@@ -97,10 +97,10 @@ and
 and generates
 
 ```html
-<a><template x-f='[8, 11]'>{{network}}</template>This is cnn</a>
+<a x-f='{"network": [8]}'>This is cnn</a>
 ```
 
- 
+If innerHTML contains inner nodes as well as interpolating strings, split the interpolating strings into spans (not applicable to attributes).  I.e. support for interpolation of textContent is only taken as far as supporting textContent only for the entire contents of the tag. 
 
 ---
 
@@ -118,12 +118,34 @@ toTempl generates
 <template><a href={{networkURL}}>{{network}}</a></template>
 ```
 
+xodus takes DOM node:
+
+```html
+<a x-f='{".textContent":"network", "href":"networkURL"}'></a>
+```
+
+and object 
+
+```JSON
+{"network": "cnn", "networkURL": "//cnn.com"}
+```
+
+and generates 
+
+```html
+<a href=//cnn.com x-f='{".textContent":"network", "href":"networkURL"}'>cnn</a>
+```
+
 ---
 
 Example 4: Facing the music, Part II
 
 ```html
 <template x-f><a href="{{networkURL='cnn.com'}}?article-id={{articleID='2021/08/04/us/florida-school-mask-mandate-law/index.html'}}" x-f=networkURL>cnn</a>
+
+<a x-f='{".textContent":"network", "href":{"networkURL": [0,9], "articleID": [9]}}' href=//cnn.com/2021/08/04/us/florida-school-mask-mandate-law/index.html>
+    cnn
+</a>
 ```
 
 
