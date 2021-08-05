@@ -141,13 +141,30 @@ and generates
 Example 4: Facing the music, Part II
 
 ```html
-<template x-f><a href="{{networkURL='cnn.com'}}?article-id={{articleID='2021/08/04/us/florida-school-mask-mandate-law/index.html'}}" x-f=networkURL>cnn</a>
-
-<a x-f='{".textContent":"network", "href":{"networkURL": [0,9], "articleID": [9]}}' href=//cnn.com/2021/08/04/us/florida-school-mask-mandate-law/index.html>
-    cnn
-</a>
+<a x-f='{".textContent":{"network": [8]}, "href":{"networkURL": [0,9], "articleID": [9]}}' href=//cnn.com/2021/08/04/us/florida-school-mask-mandate-law/index.html>This is cnn</a>
 ```
 
+h2oExtract generates {network: 'cnn', networkURL: '//cnn.com', articleID: '/2021/08/04/us/florida-school-mask-mandate-law/index.html'}
+
+toTempl generates
+
+```html
+<template><a href={{networkURL}}{{articleID}}>This is {{network}}</a></template>
+```
+
+xodus takes DOM input:
+
+```html
+<a x-f='{".textContent":{"network": [8]}, "href":{"networkURL": [0,9], "articleID": [9]}}'>This is </a>
+```
+
+and object {network: 'cnn', networkURL: '//cnn.com', articleID: '/2021/08/04/us/florida-school-mask-mandate-law/index.html'}
+
+and generates 
+
+```html
+<a x-f='{".textContent":{"network": [8]}, "href":{"networkURL": [0,9], "articleID": [9]}}' href=//cnn.com/2021/08/04/us/florida-school-mask-mandate-law/index.html>This is cnn</a>
+```
 
 TODO I
 
@@ -155,33 +172,64 @@ For Example 3 ... If a key starts with a period, like ".textContent" then it ref
 
 This raises a tricky conundrum for xodus.  There are performance benefits to using properties instead of attributes, on the client, especially for non string properties.
 
-(Perhaps the issue isn't that significant as long as template instantiation only binds to attributes).
+(Perhaps the issue isn't that significant as long as template instantiation only binds to attributes and textContent).
 
 During server-side rendering, properties don't make sense (so the .textContent will need to be hard-coded to mean "this goes inside the tag)".
 
 
 
-Example 5: Facing the music, Part III
+Example 5: DryLoops
 
 ```html
-<a x-f='{"href":[[0,13],[14]]}' href=//foxnews.com/politics/desantis-biden-do-job-secure-border>Fox News</a>
-<a x-f='{"href": [[0, 11], [12]]]}' href=//msnbc.com/opinion/why-tucker-carlson-s-trip-budapest-bad-news-america-n1275881>MSNBC</a>
-<template x-f="repeat of 3 newsStations><a href="{{networkURL='//cnn.com'}}{{articleID='/2021/08/04/us/florida-school-mask-mandate-law/index.html'}}" x-f=networkURL>CNN</a></template>
+<template x-f=3 for:each={{newsStations}}><a href={{networkURL}}{{articleID}}>{{network}}</a></template>
+<a x-f='[8, [0,9], [9]]' href=//cnn.com/2021/08/04/us/florida-school-mask-mandate-law/index.html>This is cnn</a>
+<a x-f='[18, [0, 13], [13]]' href=//foxnews.com/politics/desantis-biden-do-job-secure-border>Fair and Balanced Fox News</a>
+<a x-f='[13, [0, 11], [11]]' href=//msnbc.com/opinion/why-tucker-carlson-s-trip-budapest-bad-news-america-n1275881>Lean Forward MSNBC</a>
 ```
 
 h2oExtract generates 
 
 ```JSON
-{"newsStations": [
-    {"network": "Fox News", "networkURL": "//foxnews.com", "articleID": "/politics/desantis-biden-do-job-secure-border"}, 
-    {"network": "MSNBC", "networkURL": "//msnbc.com", "articleID": "/opinion/why-tucker-carlson-s-trip-budapest-bad-news-america-n1275881"}, 
-    {"network": "CNN", "networkURL": "//cnn.com", "articleID": }, ]}
+{
+    "newsStations": [
+        {"network": "Fox News", "networkURL": "//foxnews.com", "articleID": "/politics/desantis-biden-do-job-secure-border"}, 
+        {"network": "MSNBC", "networkURL": "//msnbc.com", "articleID": "/opinion/why-tucker-carlson-s-trip-budapest-bad-news-america-n1275881"}, 
+        {"network": "CNN", "networkURL": "//cnn.com", "articleID": "/2021/08/04/us/florida-school-mask-mandate-law/index.html"}
+    ]
+}
 ```
 
 toTempl generates ?
 
 ```html
-<template for:each={{newsStations}}><a href={{networkURL}}{{articleID}}>{{network}}</a>
+<template for:each={{newsStations}}><a href={{networkURL}}{{articleID}}>{{network}}</a></template>
+```
+
+xodus takes DOM input:
+
+```html
+<template x-f=3 for:each={{newsStations}}><a href={{networkURL}}{{articleID}}>{{network}}</a></template>
+```
+
+and object
+
+```JSON
+{
+    "newsStations": [
+        {"network": "Fox News", "networkURL": "//foxnews.com", "articleID": "/politics/desantis-biden-do-job-secure-border"}, 
+        {"network": "MSNBC", "networkURL": "//msnbc.com", "articleID": "/opinion/why-tucker-carlson-s-trip-budapest-bad-news-america-n1275881"}, 
+        {"network": "CNN", "networkURL": "//cnn.com", "articleID": "/2021/08/04/us/florida-school-mask-mandate-law/index.html"}
+    ]
+}
+```
+
+and generates 
+
+```html
+<template x-f=3 for:each={{newsStations}}><a href={{networkURL}}{{articleID}}>{{network}}</a></template>
+<a x-f='[8, [0,9], [9]]' href=//cnn.com/2021/08/04/us/florida-school-mask-mandate-law/index.html>This is cnn</a>
+<a x-f='[18, [0, 13], [13]]' href=//foxnews.com/politics/desantis-biden-do-job-secure-border>Fair and Balanced Fox News</a>
+<a x-f='[13, [0, 11], [11]]' href=//msnbc.com/opinion/why-tucker-carlson-s-trip-budapest-bad-news-america-n1275881>Lean Forward MSNBC</a>
 ```
 
 Name inspired by this [funny comment](https://twitter.com/davatron5000/status/1312955820137754624).
