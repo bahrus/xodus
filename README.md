@@ -67,32 +67,25 @@ The functions described above do the same thing.
 
 Example 2:  Facing the Music, Part I
 
-```html
-<a><template x-f>This is {{network='cnn'}}</template></a>
-```
-
-template tag with attribute x-f behaves a bit like:
+The interpolation requirement seems problematic, however you look at it.  It is tempting to say "why not just wrap all dynamic content inside a span"? or something, but the concept of interpolation applies to attributes as well.  But let's start with innerHTML / textContent
 
 ```html
-<a><template shadowroot=open>This is cnn</template></a>
+
+<a><template x-f='{".textContent":[8, 11]}'>{{network}}</template>This is cnn</a>
 ```
-
-Yes, this means user won't see anything until js loads, but interpolation seems problematic, let's face the music.
-
-However, the significance of this shortcoming may be quite small in the scheme of things, if most dynamic content is generated in list format.
 
 function h2oExtract(tbd) take this DOM node, and generates object: {network: 'cnn'}.
 
 function toTempl(tbd) can take this DOM node, and generates:
 
 ```html
-<template><a>This is {{network ?? 'cnn'}}</a></template>
+<template><a>This is {{network}}</a></template>
 ```
 
 function xodus takes the DOM node:
 
 ```html
-<a><template x-f>This is {{network='cnn'}}</template></a>
+<a><template x-f='{".textContent":[8, 11]}'>{{network}}</template>This is </a>
 ```
 
 and
@@ -104,7 +97,7 @@ and
 and generates
 
 ```html
-<a><template x-f>This is {{network}}</template></a>
+<a><template x-f='{".textContent":[8, 11]}'>{{network}}</template>This is cnn</a>
 ```
 
  
