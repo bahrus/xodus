@@ -74,6 +74,8 @@ The interpolation requirement seems problematic, however you look at it.  It is 
 <a x-f='{"network": [8]'>This is cnn</a>
 ```
 
+8 indicates the network starts at the eight position of the string (numbers are estimates, prone to human error).  A second number [8,13] indicates the end position.
+
 function h2oExtract(tbd) takes this DOM node, and generates object: {network: 'cnn'}.
 
 function toTempl(tbd) takes this DOM node, and generates:
@@ -100,7 +102,7 @@ and generates
 <a x-f='{"network": [8]}'>This is cnn</a>
 ```
 
-If innerHTML contains inner nodes as well as interpolating strings, split the interpolating strings into spans (not applicable to attributes).  I.e. support for interpolation of textContent is only taken as far as supporting textContent only for the entire contents of the tag. 
+If innerHTML contains inner nodes as well as interpolating strings, split the interpolating strings into spans (not applicable to attributes).  I.e. support for interpolation of textContent is only taken as far as supporting textContent for the entire contents of the tag. 
 
 ---
 
@@ -181,7 +183,7 @@ During server-side rendering, properties don't make sense (so the .textContent w
 Example 5: DryLoops
 
 ```html
-<template x-f=3 for:each={{newsStations}}><a href={{networkURL}}{{articleID}}>{{network}}</a></template>
+<template x-f="for each of 3 {{newsStations}}"><a href={{networkURL}}{{articleID}}>{{network}}</a></template>
 <a x-f='[8, [0,9], [9]]' href=//cnn.com/2021/08/04/us/florida-school-mask-mandate-law/index.html>This is cnn</a>
 <a x-f='[18, [0, 13], [13]]' href=//foxnews.com/politics/desantis-biden-do-job-secure-border>Fair and Balanced Fox News</a>
 <a x-f='[13, [0, 11], [11]]' href=//msnbc.com/opinion/why-tucker-carlson-s-trip-budapest-bad-news-america-n1275881>Lean Forward MSNBC</a>
@@ -205,10 +207,13 @@ toTempl generates ?
 <template for:each={{newsStations}}><a href={{networkURL}}{{articleID}}>{{network}}</a></template>
 ```
 
+...or whatever syntax template instantiation settles on.
+
+
 xodus takes DOM input:
 
 ```html
-<template x-f=3 for:each={{newsStations}}><a href={{networkURL}}{{articleID}}>{{network}}</a></template>
+<template x-f="for each of the {{newsStations}}><a href={{networkURL}}{{articleID}}>{{network}}</a></template>
 ```
 
 and object
@@ -226,7 +231,7 @@ and object
 and generates 
 
 ```html
-<template x-f=3 for:each={{newsStations}}><a href={{networkURL}}{{articleID}}>{{network}}</a></template>
+<template x-f="for each of 3 {{newsStations}}"><a href={{networkURL}}{{articleID}}>{{network}}</a></template>
 <a x-f='[8, [0,9], [9]]' href=//cnn.com/2021/08/04/us/florida-school-mask-mandate-law/index.html>This is cnn</a>
 <a x-f='[18, [0, 13], [13]]' href=//foxnews.com/politics/desantis-biden-do-job-secure-border>Fair and Balanced Fox News</a>
 <a x-f='[13, [0, 11], [11]]' href=//msnbc.com/opinion/why-tucker-carlson-s-trip-budapest-bad-news-america-n1275881>Lean Forward MSNBC</a>
