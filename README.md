@@ -159,7 +159,7 @@ toTempl generates
 xodus takes DOM input:
 
 ```html
-<a x-f='{".textContent":{"network": [8]}, "href":"{{networkURL}}{{articleID}}">This is </a>
+<template><a href={{networkURL}}{{articleID}}>This is {{network}}</a></template>
 ```
 
 and object {network: 'cnn', networkURL: '//cnn.com', articleID: '/2021/08/04/us/florida-school-mask-mandate-law/index.html'}
@@ -182,13 +182,14 @@ During server-side rendering, properties don't make sense (so the .textContent w
 
 ---
 
-Example 5: DryLoops
+Example 5: Dry Loops
 
 ```html
-<template x-f="for each of 3 {{newsStations}}"><a href={{networkURL}}{{articleID}}>{{network}}</a></template>
+<template x-f="start-of {{newsStations}}"><a href={{networkURL}}{{articleID}}>{{network}}</a></template>
 <a x-f='[8, [0,9], [9]]' href=//cnn.com/2021/08/04/us/florida-school-mask-mandate-law/index.html>This is cnn</a>
 <a x-f='[18, [0, 13], [13]]' href=//foxnews.com/politics/desantis-biden-do-job-secure-border>Fair and Balanced Fox News</a>
 <a x-f='[13, [0, 11], [11]]' href=//msnbc.com/opinion/why-tucker-carlson-s-trip-budapest-bad-news-america-n1275881>Lean Forward MSNBC</a>
+<template x-f="end-of {{newsStations}}">
 ```
 
 h2oExtract generates 
@@ -215,7 +216,7 @@ toTempl generates ?
 xodus takes DOM input:
 
 ```html
-<template x-f="for each of n {{newsStations}}"><a href={{networkURL}}{{articleID}}>{{network}}</a></template>
+<template for:each={{newsStations}}><a href={{networkURL}}{{articleID}}>{{network}}</a></template>
 ```
 
 and object
@@ -233,10 +234,11 @@ and object
 and generates 
 
 ```html
-<template x-f="for each of 3 {{newsStations}}"><a href={{networkURL}}{{articleID}}>{{network}}</a></template>
+<template x-f="start-of {{newsStations}}"><a href={{networkURL}}{{articleID}}>{{network}}</a></template>
 <a x-f='[8, [0,9], [9]]' href=//cnn.com/2021/08/04/us/florida-school-mask-mandate-law/index.html>This is cnn</a>
 <a x-f='[18, [0, 13], [13]]' href=//foxnews.com/politics/desantis-biden-do-job-secure-border>Fair and Balanced Fox News</a>
 <a x-f='[13, [0, 11], [11]]' href=//msnbc.com/opinion/why-tucker-carlson-s-trip-budapest-bad-news-america-n1275881>Lean Forward MSNBC</a>
+<template x-f="end-of {{newsStations}}">
 ```
 
 ---
