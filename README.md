@@ -35,7 +35,7 @@ function xodus takes as input:
 1. DOM node:
 
 ```html
-<a x-f=network></a>
+<a>{{network}}</a>
 ```
 
 and 
@@ -62,6 +62,8 @@ Example 1a:
 
 The functions described above do the same thing.
 
+xodus supports an option to use this syntax.
+
 ---
 
 
@@ -87,7 +89,7 @@ function toTempl(tbd) takes this DOM node, and generates:
 function xodus takes the DOM node:
 
 ```html
-<a x-f='{"network": [8]}'>This is </a>
+<a>This is {{network}}</a>
 ```
 
 and
