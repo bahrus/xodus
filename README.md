@@ -157,7 +157,7 @@ toTempl generates
 xodus takes DOM input:
 
 ```html
-<a x-f='{".textContent":{"network": [8]}, "href":{"networkURL": [0,9], "articleID": [9]}}'>This is </a>
+<a x-f='{".textContent":{"network": [8]}, "href":"{{networkURL}}{{articleID}}">This is </a>
 ```
 
 and object {network: 'cnn', networkURL: '//cnn.com', articleID: '/2021/08/04/us/florida-school-mask-mandate-law/index.html'}
