@@ -71,10 +71,10 @@ The interpolation requirement seems problematic, however you look at it.  It is 
 
 ```html
 
-<a x-f='{"network": [8]'>This is cnn</a>
+<a x-f='{"network": [8]}'>This is cnn</a>
 ```
 
-8 indicates the network starts at the eight position of the string (numbers are estimates, prone to human error).  A second number [8,13] indicates the end position.
+8 indicates the network starts at the eighth position of the string (numbers are estimates, prone to human error).  A second number [8,13] indicates the end position.
 
 function h2oExtract(tbd) takes this DOM node, and generates object: {network: 'cnn'}.
 
@@ -87,7 +87,7 @@ function toTempl(tbd) takes this DOM node, and generates:
 function xodus takes the DOM node:
 
 ```html
-<a x-f='{"network": [8]'>This is </a>
+<a x-f='{"network": [8]}'>This is </a>
 ```
 
 and
@@ -213,7 +213,7 @@ toTempl generates ?
 xodus takes DOM input:
 
 ```html
-<template x-f="for each of n {{newsStations}}><a href={{networkURL}}{{articleID}}>{{network}}</a></template>
+<template x-f="for each of n {{newsStations}}"><a href={{networkURL}}{{articleID}}>{{network}}</a></template>
 ```
 
 and object
