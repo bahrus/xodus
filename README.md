@@ -125,7 +125,7 @@ toTempl generates
 xodus takes DOM node:
 
 ```html
-<a x-f='{".textContent":"network", "href":"networkURL"}'></a>
+<a href={{networkURL}}>{{network}}</a>
 ```
 
 and object 
