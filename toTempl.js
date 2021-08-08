@@ -9,11 +9,14 @@ export function toTempl(templ, fromShadow) {
             templateToClone.innerHTML = templ.innerHTML;
         }
     }
-    const bindAttr = 'x-f';
+    insertMoustache('x-f', templateToClone);
+    insertMoustache('data-xf', templateToClone);
+    return templateToClone;
+}
+function insertMoustache(bindAttr, templateToClone) {
     const targets = templateToClone.content.querySelectorAll(`[${bindAttr}]`);
     for (const target of targets) {
         target.innerHTML = `{{${target.getAttribute(bindAttr)}}}`;
         target.removeAttribute(bindAttr);
     }
-    return templateToClone;
 }
