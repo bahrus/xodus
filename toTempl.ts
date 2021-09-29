@@ -3,7 +3,7 @@ export function toTempl(templ: Element, fromShadow: boolean){
     if(!(templateToClone instanceof HTMLTemplateElement)){
         templateToClone = document.createElement('template');
         if(fromShadow){
-            templateToClone.innerHTML = templ.shadowRoot.innerHTML;
+            templateToClone.innerHTML = templ.shadowRoot!.innerHTML;
         }else{
             templateToClone.innerHTML = templ.innerHTML;
         }
