@@ -12,16 +12,18 @@ The goals are:
 2.  Can be reverse engineered into the data structures from which the HTML was generated. (h2oExtract)
 3.  Provides enough information to apply well-performing updates on the rendered HTML DOM as client-side data changes.
 4.  Could be used as an HTML-based templating language on the server.   
-4.  Compatible with any language capable of parsing HTML and JSON.
+5.  Compatible with any language capable of parsing HTML and JSON.
+
+Infrastructure:
+
+
 
 Example 1: 
 
 ```html
-<a x-f=network>cnn</a>
+<a be-observant=network>cnn</a>
 ```
 function h2oExtract takes this DOM node, and generates object: {network: 'cnn'}.
-
-x-f stands for "expand from", or "expanded from", depending on the context.
 
 function toTempl takes this node and  generates (in memory):
 
@@ -35,7 +37,7 @@ function xodus takes as input:
 1. DOM node:
 
 ```html
-<a>{{network}}</a>
+<a be-observant=network></a>
 ```
 
 and 
@@ -49,7 +51,7 @@ and
 and generates
 
 ```html
-<a x-f=network>cnn</a>
+<a be-observant=network>cnn</a>
 ```
 
 ---
