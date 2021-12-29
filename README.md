@@ -2,7 +2,10 @@
 
 xodus transforms HTML as it leaves the server and travels to the promised land of the end user's browser.
 
-It is used to add dynamic content to declarative web components, defined as HTML, served via text/html and/or text/plain mime, accessible via a CDN url.  Many important, useful web components consist of 99% HTML / CSS / JSON, 1% JavaScript.  But strategically weaving in dynamic content into the web component before it arrives in the browser can provide a more satisfying initial view.  
+It is used to add dynamic content to declarative web components, defined as HTML, served via text/html and/or text/plain mime type, accessible via a CDN url.  Many important, useful web components consist of 99% HTML / CSS / JSON, 1% JavaScript.  But strategically weaving in dynamic content into the web component before it arrives in the browser can provide a more satisfying initial view. 
+
+[Flow](./xodus.svg)
+<img src="./xodus.svg">
 
 xodus accomplishes this by providing helper classes that build on [CloudFlare's HTMLRewriter](https://developers.cloudflare.com/workers/runtime-apis/html-rewriter).
 
