@@ -6,7 +6,7 @@ It is used to add dynamic content to declarative web components, accessible via 
 
 xodus provides helper classes that build on [CloudFlare's HTMLRewriter](https://developers.cloudflare.com/workers/runtime-apis/html-rewriter), to accomplish this.
 
-Hopefully https://discourse.wicg.io/t/proposal-support-cloudflares-htmlrewriter-api-in-workers/5721 will support something similar eventually, which would allow weaving in data held in storage, for example.
+Hopefully native browser service workers will support something [similar}(https://discourse.wicg.io/t/proposal-support-cloudflares-htmlrewriter-api-in-workers/5721)  eventually, which would allow weaving in data held in storage, for example.
 
 Its syntax is specific (but extendable) for components that use the may-it-be family of element behaviors/decorators to achieve binding, beginning with [be-definitive](https://github.com/bahrus/be-definitive).
 
