@@ -17,3 +17,19 @@ Name inspired by this [funny comment](https://twitter.com/davatron5000/status/13
 
 Usefulness of this project should grow if, W3C willing, something like [templ-mount](https://github.com/bahrus/templ-mount) is built into the platform.
 
+xodus follows an Edge of Tomorrow pattern:
+
+1.  Every static resource reference is versioned, so coherent caching is possible.
+2.  It is useful to think of the generation of HTML in 4 phases, which break down into two pairs of (nearly) isomorphic processing
+    a.  On the Edge, in a cloudflare worker (or dino or node service) modeled after Service Workers
+    b.  In a browser service worker
+    c.  In a template in the browser, during template instantiation.
+    d.  In the live DOM tree
+3.  Multi layer declarative redundancy.  The same declarative syntax is used and potentially supported in all 4 layers above.  Where the syntax refers to external resources (including library JS references), each of the first three layers can either:
+    a.  See if the external resource is in cache, and if so, perform the instructions found in the declarative syntax.
+    b.  If not, "punt" and let the next layer handle it.
+    c.  In the case of non static resources, impose a timeout on the request, and if it times out, punt to the next layer.
+    d.  If a layer "punts" due to lack of resources, nevertheless, in the background, retrieve the resource for the next time.
+    e.  The last layer, the live DOM tree, is stuck with no choice but to perform the needed task if all other layers had to punt.  Ideally, this will only happen "once" per browser, "once" per cloud node, etc.
+
+
