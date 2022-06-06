@@ -20,11 +20,13 @@ Usefulness of this project should grow if, W3C willing, something like [templ-mo
 xodus follows an Edge of Tomorrow pattern:
 
 1.  Every static resource reference is versioned, so coherent caching is possible.
-2.  It is useful to think of the generation of HTML in 4 phases, which break down into two pairs of (nearly) isomorphic processing
-    1.  On the Edge, in a cloudflare worker (or dino or node service) modeled after Service Workers, which can share code with:
-    2.  In a browser service worker
-    3.  In a template in the browser, during template instantiation, which can share code with:
-    4.  In the live DOM tree
+2.  It is useful to think of the generation of HTML in 4 phases, which break down into two pairs of (nearly) isomorphic processing:
+    1.  Out of the main thread:
+        1.  On the Edge, in a cloudflare worker (or dino or node service) modeled after Service Workers.
+        2.  In a browser service worker.
+    2.  On the main thread:
+        1.  In a template in the browser, during template instantiation, which can share code with:
+        2.  In the live DOM tree
 3.  Multi-layer declarative redundancy.  The same declarative syntax is used and potentially supported in all 4 layers above.  Where the syntax refers to external resources (including library JS references), each of the first three layers can either:
     1.  See if the external resource is in cache, and if so, perform the instructions found in the declarative syntax.
     2.  If not, "punt" and let the next layer handle it.
