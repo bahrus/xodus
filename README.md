@@ -34,4 +34,8 @@ xodus follows an Edge of Tomorrow pattern:
     4.  If a layer "punts" due to lack of resources, nevertheless, in the background, retrieve the resource for the next time.
     5.  The last layer, the live DOM tree, is stuck with no choice but to perform the needed task if all other layers had to punt.  Ideally, this will only happen "once" per browser, "once" per cloud node, etc.
 
+One particularly difficult area to optimize has to do with whether to embed external resources within the original payload, for the benefit of initial paint metrics, vs linking to them, which is better for fine-grained caching.
+
+If the cloud function can "guess" what is in the cache based on visitor counts, it could embed the first time, link on subsequent times after the cache has been installed.  Who knows, maybe this functionality is built into web bundles?
+
 
