@@ -31,7 +31,7 @@ xodus follows an Edge of Tomorrow pattern:
     1.  See if the external resource is in cache, and if so, perform the instructions found in the declarative syntax.
     2.  If not, "punt" and let the next layer handle it.
     3.  In the case of non static resources, impose a timeout on the request, and if it times out, punt to the next layer.
-    4.  If a layer "punts" due to lack of resources, nevertheless, in the background, retrieve the resource for the next time.
+    4.  If a layer "punts" on embedding a static resource due to it not being in cache, nevertheless, in the background, retrieve the resource for the next time.
     5.  The last layer, the live DOM tree, is stuck with no choice but to perform the needed task if all other layers had to punt.  Ideally, this will only happen "once" per browser, "once" per cloud node, etc.
 
 One particularly difficult area to optimize has to do with whether to embed external resources within the original payload, for the benefit of initial paint metrics, vs linking to them, which is better for fine-grained caching.
